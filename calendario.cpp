@@ -2,9 +2,29 @@
 
 using namespace std;
 
+int meses[13]={29,31,28,31,30,31,30,31,31,30,31,30,31};
+
+void dibujar_cal(int dia, int mes, int anio)
+{
+    cout << "L\tM\tX\tJ\tV\tS\tD\n\n";
+
+    for(int i = dia; i; i--)
+    {
+        cout << "\t";
+    }
+
+    int d = 1;
+    for(int i = meses[mes]; i; i--)
+    {
+        cout << d << "\t";
+        if((d%7) == (7-dia)){cout << "\n";}
+        d++;
+    }
+    cout << "\n";
+}
+
 int main()
 {
-    cout << "\n=====================CALENDARIO====================\n";
     int  mes, anio;
     cout << "Ingrese el mes: ";
     cin >> mes;
@@ -12,15 +32,7 @@ int main()
     cin >> anio;
     cout << "\n";
 
-    cout << "L\tM\tX\tJ\tV\tS\tD\n";
-    for(int i = 1; i < 31; i++)
-    {
-        if((i-1)%7 == 0)
-        {
-            cout << "\n";
-        }
-        cout << i << "\t";
-    }
+    dibujar_cal(5, mes, anio);
 
     return 0;
 }
