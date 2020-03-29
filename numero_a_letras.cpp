@@ -5,7 +5,7 @@ using namespace std;
 
 string uni[16]=
 {
-    "cero ", "uno ", "dos ", "tres ", "cuatro ", "cinco ", "seis ", "siete ", "ocho ", "nueve ", "diez ", "once ", "doce ", "trece ", "catorce ", "quince "
+    "cero", "un", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez", "once", "doce", "trece", "catorce", "quince"
 };
 
 string dece[10]=
@@ -20,10 +20,10 @@ string cen[10]=
 
 string mill[6]=
 {
-    " millones ", " mil ", " billones ", " un millon " ,"\0", " un billon "
+    " millones ", " mil ", " billones ", " un millon " ,"", " un billon "
 };
 
-int trio_num(long n)
+int trio_cant(long n)
 {
     int c = 1;
     while(n/1000)
@@ -50,42 +50,32 @@ int trio_f(long n, int x)
     return int((n%m)/d);
 }
 
-string trio_anal(int x)
+string trio_anl(int x)
 {
     string trio = "";
 
     if(x)
     {
-        if(x == 100){return cen[0];}    //evaluar cien
-        if(x / 100)                     //evaluar centenas
-        {
-            trio += cen[x/100];
-        }
+        if(x == 100){return cen[0];}                //evaluar cien(caso especial)
 
-        if(x%100 > 15)                 //evaluar decenas
+        if(x / 100){trio += cen[x/100];}            //evaluar centenas
+
+        if(x%100 == 20){return (trio += dece[2]);}  //20(caso especial)
+
+        if(x%100 > 29)
         {
-            if(x%100 < 20)
-            {
-                trio += dece[0];
-                trio += uni[x % 10];
-            }
-            else if(x%100 < 30)
-            {
-                trio += dece[1];
-                trio += uni[x % 10];
-            }
-            else
-            {
-                trio += dece[(x % 100)/10];
+            trio += dece[(x % 100)/10];
                 if(x%10)
                 {
                     trio = trio + "y " + uni[x%10];
                 }
-            }
-        }else{
-
-            trio += uni[x%100];
         }
+        else if(x%100 > 15)
+        {
+            trio += dece[(x%100)/10 - 1];
+            trio += uni[x % 10];
+        }
+        else if(x%100 > 0){trio += uni[x%100];}
     }
 
     return trio;
@@ -97,31 +87,31 @@ int main()
     long n;
     cin >> n;
 
-    for(int i = 4; i > 2; i-=2)
+    for(int i = 4; i > -1; i=i-2)
     {
-        if(trio_num(n) >  i)
+        if(trio_cant(n) >  i)
         {
             if(trio_f(n,i+2))
             {
-                cout << trio_anal(trio_f(n,i+2)) << mill[1];
+                cout << ((trio_f(n,i+2) != 1) ? trio_anl(trio_f(n,i+2)) : "\0") << mill[1];
             }
-            if(trio_f(n,i+1))
+            if(trio_f(n,i+1) && i>1)
             {
                 if(trio_f(n,i+1) == 1)
                 {
                     cout << mill[i+1];
                 }else{
-                    cout << trio_anal(trio_f(n,i+1)) << mill[i-2];
+                    cout << trio_anl(trio_f(n,i+1)) << mill[i-2];
                 }
             }
         }
     }
 
-    if(trio_f(n,2))
+    cout << trio_anl(trio_f(n,1));
+    if(trio_f(n,1)%10 == 1 && trio_f(n,1) != 11)
     {
-        cout << trio_anal(trio_f(n,2)) << " mil ";
+        cout << "o";
     }
-    cout << trio_anal(trio_f(n,1)) << endl;
-
+    cout << "\n";
     return 0;
 }
