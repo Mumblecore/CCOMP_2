@@ -108,7 +108,7 @@ int main()
     }
 
     cout << trio_anl(trio_f(n,1));
-    if(trio_f(n,1)%10 == 1 && trio_f(n,1) != 11)
+    if((trio_f(n,1)%10 == 1)  &&  (trio_f(n,1) != 11))
     {
         cout << "o";
     }
