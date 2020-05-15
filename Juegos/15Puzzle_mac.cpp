@@ -5,28 +5,27 @@
 using namespace std;
 
 /*======================FUNCION PARA MOSTRAR EK ARRAY EN CONSOLA========================*/
-void print(int arr[][4],int tam)
+void print(int arr[][4])
 {
     system("clear");
 
-    while(tam--)
+    for(int (*p)[4] = arr; p < arr + 4; p++)
     {
         cout << "|";
-        for(int *p = *arr; p != *arr + 4; p++)
+        for(int *q = *p; q < *p + 4; q++)
         {
-            if(*p<10)
+            if(*q<10)
             {
                 cout << " ";
             }
-            if(*p>0)
+            if(*q)
             {
-                cout << *p << "|";
+                cout << *q << "|";
             }else
             {
                 cout << " |";
             }
         }
-        arr++;
         cout << endl;
     }
 }
